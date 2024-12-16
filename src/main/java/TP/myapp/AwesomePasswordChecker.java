@@ -1,3 +1,4 @@
+
 package TP.myapp;
 
 import java.io.BufferedReader;
@@ -30,14 +31,17 @@ public class AwesomePasswordChecker {
   }
 
   /**
-   * Récupère l'instance unique de la classe en chargeant les centres de clusters
+   * Récupère l'instance unique de la classe en chargeant
+   * les centres de clusters
    * depuis un fichier.
    *
    * @param file le fichier contenant les centres de clusters.
-   * @return l'instance unique de {@code AwesomePasswordChecker}.
-   * @throws IOException en cas de problème de lecture du fichier.
+   * @return l'instance unique de
+   *         {@code AwesomePasswordChecker}.
+   * @throws IOException en cas de problème
+   *                     de lecture du fichier.
    */
-  public static AwesomePasswordChecker getInstance(File file) throws IOException {
+  public static AwesomePasswordChecker getInstance(final File file) throws IOException {
     if (instance == null) {
       instance = new AwesomePasswordChecker(new FileInputStream(file));
     }
@@ -45,7 +49,8 @@ public class AwesomePasswordChecker {
   }
 
   /**
-   * Récupère l'instance unique de la classe en chargeant les centres de clusters
+   * Récupère l'instance unique de la classe en chargeant
+   * les centres de clusters
    * depuis un fichier intégré.
    *
    * @return l'instance unique de {@code AwesomePasswordChecker}.
@@ -68,18 +73,17 @@ public class AwesomePasswordChecker {
    * @throws IOException en cas de problème de lecture du flux.
    */
   public AwesomePasswordChecker(InputStream is) throws IOException {
-    BufferedReader br = new BufferedReader(new InputStreamReader(is));
-    String line;
-    while ((line = br.readLine()) != null) {
-      String[] values = line.split(",");
-      double[] center = new double[values.length];
-
-      for (int i = 0; i < values.length; ++i) {
-        center[i] = Double.parseDouble(values[i]);
-      }
-      clusterCenters.add(center);
-    }
-    br.close();
+      try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
+          String line;
+          while ((line = br.readLine()) != null) {
+              String[] values = line.split(",");
+              double[] center = new double[values.length];
+              
+              for (int i = 0; i < values.length; ++i) {
+                  center[i] = Double.parseDouble(values[i]);
+              }
+              clusterCenters.add(center);
+          } }
   }
 
   /**
@@ -266,8 +270,10 @@ public class AwesomePasswordChecker {
     }
 
     // Step 5: Output
-    ByteBuffer md5Buffer = ByteBuffer.allocate(16).order(ByteOrder.LITTLE_ENDIAN);
-    md5Buffer.putInt(h[0]).putInt(h[1]).putInt(h[2]).putInt(h[3]);
+    ByteBuffer md5Buffer = ByteBuffer
+        .allocate(16).order(ByteOrder.LITTLE_ENDIAN);
+    md5Buffer.putInt(h[0]).putInt(h[1])
+        .putInt(h[2]).putInt(h[3]);
     byte[] md5Bytes = md5Buffer.array();
 
     StringBuilder md5Hex = new StringBuilder();
