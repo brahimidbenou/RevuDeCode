@@ -1,9 +1,5 @@
 package TP.myapp;
 
-/**
- * 
- *
- */
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -12,19 +8,35 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe qui vérifie la robustesse des mots de passe en utilisant des centres
+ * de clusters pour le calcul des distances.
+ */
 public class AwesomePasswordChecker {
 
+  /** Instance unique de la classe (singleton). */
   private static AwesomePasswordChecker instance;
 
+  /** Liste des centres des clusters utilisés pour le calcul des distances. */
   private final List<double[]> clusterCenters = new ArrayList<>();
 
+  /**
+   * Constructeur par défaut.
+   */
   public AwesomePasswordChecker() {
   }
 
+  /**
+   * Récupère l'instance unique de la classe en chargeant les centres de clusters
+   * depuis un fichier.
+   *
+   * @param file le fichier contenant les centres de clusters.
+   * @return l'instance unique de {@code AwesomePasswordChecker}.
+   * @throws IOException en cas de problème de lecture du fichier.
+   */
   public static AwesomePasswordChecker getInstance(File file) throws IOException {
     if (instance == null) {
       instance = new AwesomePasswordChecker(new FileInputStream(file));
@@ -32,6 +44,13 @@ public class AwesomePasswordChecker {
     return instance;
   }
 
+  /**
+   * Récupère l'instance unique de la classe en chargeant les centres de clusters
+   * depuis un fichier intégré.
+   *
+   * @return l'instance unique de {@code AwesomePasswordChecker}.
+   * @throws IOException en cas de problème de lecture du fichier.
+   */
   public static AwesomePasswordChecker getInstance() throws IOException {
     if (instance == null) {
       InputStream is = AwesomePasswordChecker.class.getClassLoader()
@@ -41,6 +60,13 @@ public class AwesomePasswordChecker {
     return instance;
   }
 
+  /**
+   * Constructeur qui initialise les centres de clusters à partir d'un flux
+   * d'entrée.
+   *
+   * @param is le flux d'entrée contenant les centres de clusters.
+   * @throws IOException en cas de problème de lecture du flux.
+   */
   public AwesomePasswordChecker(InputStream is) throws IOException {
     BufferedReader br = new BufferedReader(new InputStreamReader(is));
     String line;
@@ -56,6 +82,12 @@ public class AwesomePasswordChecker {
     br.close();
   }
 
+  /**
+   * Génère un tableau de masques pour un mot de passe donné.
+   *
+   * @param password le mot de passe à analyser.
+   * @return un tableau d'entiers représentant le masque du mot de passe.
+   */
   public int[] maskAff(String password) {
     int[] maskArray = new int[28];
     int limit = Math.min(password.length(), 28);
@@ -114,6 +146,13 @@ public class AwesomePasswordChecker {
     return maskArray;
   }
 
+  /**
+   * Calcule la distance minimale entre le mot de passe et les centres de
+   * clusters.
+   *
+   * @param password le mot de passe à analyser.
+   * @return la distance minimale calculée.
+   */
   public double getDistance(String password) {
     int[] maskArray = maskAff(password);
     double minDistance = Double.MAX_VALUE;
@@ -123,6 +162,13 @@ public class AwesomePasswordChecker {
     return minDistance;
   }
 
+  /**
+   * Calcule la distance euclidienne entre deux vecteurs.
+   *
+   * @param a un tableau d'entiers.
+   * @param b un tableau de doubles.
+   * @return la distance euclidienne entre les deux vecteurs.
+   */
   public double euclideanDistance(int[] a, double[] b) {
     double sum = 0;
     for (int i = 0; i < a.length; i++) {
@@ -131,6 +177,12 @@ public class AwesomePasswordChecker {
     return Math.sqrt(sum);
   }
 
+  /**
+   * Calcule le hachage MD5 d'une chaîne d'entrée.
+   *
+   * @param input la chaîne à hacher.
+   * @return le hachage MD5 sous forme de chaîne hexadécimale.
+   */
   public static String ComputeMD5(String input) {
     byte[] message = input.getBytes();
     int messageLenBytes = message.length;
