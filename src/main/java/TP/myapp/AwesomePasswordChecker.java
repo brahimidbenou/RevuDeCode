@@ -1,4 +1,3 @@
-
 package TP.myapp;
 
 import java.io.BufferedReader;
@@ -73,17 +72,18 @@ public class AwesomePasswordChecker {
    * @throws IOException en cas de problème de lecture du flux.
    */
   public AwesomePasswordChecker(InputStream is) throws IOException {
-      try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
-          String line;
-          while ((line = br.readLine()) != null) {
-              String[] values = line.split(",");
-              double[] center = new double[values.length];
-              
-              for (int i = 0; i < values.length; ++i) {
-                  center[i] = Double.parseDouble(values[i]);
-              }
-              clusterCenters.add(center);
-          } }
+    try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
+      String line;
+      while ((line = br.readLine()) != null) {
+        String[] values = line.split(",");
+        double[] center = new double[values.length];
+
+        for (int i = 0; i < values.length; ++i) {
+          center[i] = Double.parseDouble(values[i]);
+        }
+        clusterCenters.add(center);
+      }
+    }
   }
 
   /**
