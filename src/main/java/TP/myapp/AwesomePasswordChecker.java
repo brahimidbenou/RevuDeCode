@@ -24,7 +24,7 @@ public class AwesomePasswordChecker {
 
   public AwesomePasswordChecker() {
   }
-  
+
   public static AwesomePasswordChecker getInstance(File file) throws IOException {
     if (instance == null) {
       instance = new AwesomePasswordChecker(new FileInputStream(file));
