@@ -1,9 +1,13 @@
 package TP.myapp;
 
-import org.junit.jupiter.api.Test;
-import java.io.IOException;
 import java.io.File;
-import static org.junit.jupiter.api.Assertions.*;
+import java.io.IOException;
+
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
 
 class AwesomePasswordCheckerTest {
 
@@ -34,11 +38,11 @@ class AwesomePasswordCheckerTest {
     
     @Test
     public void maskAffTest(){
-        String a = "Na ";
+        String a = "PODUB+yt*";
         AwesomePasswordChecker checker = new AwesomePasswordChecker();
         int tab[] = checker.maskAff(a);
         assertNotNull(tab);
-        assertArrayEquals(new int[] {3, 1, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, tab);
+        assertArrayEquals(new int[] {4, 3, 4, 3, 4, 7, 2, 1, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, tab);
     }
 
     
@@ -54,7 +58,7 @@ class AwesomePasswordCheckerTest {
     public void MD5HasherTest() {
         String a = "&pasWrood+34%";
         assertNotNull(a);
-        System.out.println(AwesomePasswordChecker.ComputeMD5(a));
+        //System.out.println(AwesomePasswordChecker.ComputeMD5(a));
     }
 
     @Test
