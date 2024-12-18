@@ -13,7 +13,7 @@ jobs:
       - name: Install Checkstyle
         run: sudo apt-get install checkstyle
       - name: Run Checkstyle
-        run: checkstyle -c /google_checks.xml src/main/java/password/AwesomePasswordChecker.java
+        run: checkstyle -c /google_checks.xml src/main/java/TP/myapp/AwesomePasswordChecker.java
 
   unit-tests:
     runs-on: ubuntu-latest
